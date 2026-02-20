@@ -1,0 +1,1056 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PODRIDA CALCULATOR</title>
+  <style>
+    :root{
+      --bg:#061a33;
+      --border: rgba(255,255,255,.18);
+      --grid: rgba(255,255,255,.12);
+      --text:#ffffff;
+
+      --pidioBg: rgba(255,255,255,.10);
+      --llevoBg: rgba(110,200,255,.18);
+
+      --turnBg: rgba(255, 204, 80, .90);
+      --turnOutline: rgba(0,0,0,.25);
+
+      --roundBg: rgba(255,255,255,.10);
+      --muted: rgba(255,255,255,.75);
+    }
+
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      margin:0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .wrap{ max-width:1750px; margin:0 auto; padding:18px; }
+
+    .titleBar{
+      width:100%;
+      display:flex;
+      justify-content:center;
+      margin:8px 0 14px 0;
+    }
+    .title{
+      font-size:44px;
+      font-weight:1000;
+      letter-spacing:.8px;
+      text-align:center;
+      padding:8px 14px;
+      border-radius:14px;
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--border);
+    }
+
+    .toolbar{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:14px;
+    }
+    button{
+      padding:9px 14px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      cursor:pointer;
+    }
+    button:hover{ background: rgba(255,255,255,.10); }
+    small{ color: var(--muted); }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:14px;
+      align-items:start;
+    }
+    @media (max-width: 1200px){
+      .layout{ grid-template-columns: 1fr; }
+    }
+
+    table.main{
+      width:100%;
+      border-collapse:collapse;
+      table-layout:fixed;
+      border:2px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      overflow:hidden;
+    }
+    table.main th, table.main td{
+      border:1px solid var(--grid);
+      height:40px;
+      padding:8px 8px;
+      vertical-align:middle;
+      font-size:15px;
+      color: var(--text);
+    }
+    table.main thead th{
+      font-weight:900;
+      background: rgba(255,255,255,.06);
+    }
+
+    col.cc { width: 195px; }
+    col.pidio { width: 110px; }
+    col.llevo { width: 100px; }
+    col.puntos { width: 140px; }
+
+    .sepL{ border-left:2px solid var(--border) !important; }
+    .sepR{ border-right:2px solid var(--border) !important; }
+    .topThick{ border-top:2px solid var(--border) !important; }
+    .bottomThick{ border-bottom:2px solid var(--border) !important; }
+
+    /* ✅ NOMBRES MÁS GRANDES (más que antes) */
+    .nameInput{
+      width:100%;
+      box-sizing:border-box;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px 10px;
+      font-weight:1000;
+      font-size:32px;  /* <- MÁS GRANDE */
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      text-align:center;
+      outline:none;
+    }
+
+    /* Ronda: chicas por defecto */
+    .roundInput{
+      width:100%;
+      box-sizing:border-box;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:10px 10px;
+      font-weight:1000;
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      outline:none;
+      transition: font-size .15s ease, transform .15s ease, opacity .15s ease, background .15s ease;
+      font-size:11px;
+      opacity:.70;
+    }
+    /* ✅ RONDA ACTIVA MUCHO MÁS GRANDE */
+    .roundInput.roundActiveBig{
+      font-size:36px;
+      opacity:1;
+      transform: scale(1.03);
+      background: rgba(255,255,255,.14);
+    }
+    /* ✅ PRÓXIMA RONDA MUCHO MÁS GRANDE */
+    .roundInput.roundNextBig{
+      font-size:28px;
+      opacity:.95;
+      background: rgba(255,255,255,.10);
+    }
+
+    select{
+      width:100%;
+      height:34px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      padding:2px 10px;
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      transition: background .15s ease, box-shadow .15s ease;
+      outline:none;
+    }
+    option{ color:#000; }
+
+    select.pidioSel{ background: var(--pidioBg); }
+    select.llevoSel{ background: var(--llevoBg); }
+
+    select.turnActive{
+      background: var(--turnBg) !important;
+      color:#111;
+      box-shadow: 0 0 0 3px var(--turnOutline);
+      border-color: rgba(0,0,0,.25);
+      font-weight:1000;
+    }
+
+    td.roundActive{ background: var(--roundBg); }
+
+    .pts{
+      text-align:center;
+      font-weight:1000;
+      letter-spacing:.3px;
+    }
+    .pts.neg{ color:#ff8a8a; }
+    .pts.pos{ color:#9cff9c; }
+
+    /* TOCA PEDIR / REPARTE en columna puntos */
+    .pts.turnText{
+      color:#ffd36e;
+      font-weight:1100;
+      text-transform:uppercase;
+      font-size:12px;
+      letter-spacing:.6px;
+    }
+    .pts.dealerText{
+      color:#8ad7ff;
+      font-weight:1100;
+      text-transform:uppercase;
+      font-size:12px;
+      letter-spacing:.6px;
+    }
+
+    tfoot td{
+      height:64px;
+      font-size:18px;
+      font-weight:1100;
+      background: rgba(255,255,255,.06);
+      border-top:2px solid var(--border) !important;
+    }
+    .totalLabel{ text-align:left; padding-left:12px; }
+    .totalBox{ text-align:center; }
+
+    .forcedHint{
+      box-shadow: 0 0 0 2px rgba(255,255,255,.12) inset;
+    }
+
+    /* Scoreboard */
+    .scoreboard{
+      border:1px solid var(--border);
+      border-radius:14px;
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+      position:sticky;
+      top:14px;
+    }
+    .scoreboardHeader{
+      padding:12px 12px;
+      background: rgba(255,255,255,.06);
+      font-weight:1000;
+      letter-spacing:.4px;
+    }
+    table.score{
+      width:100%;
+      border-collapse:collapse;
+      table-layout:fixed;
+    }
+    table.score th, table.score td{
+      border-top:1px solid var(--grid);
+      padding:8px 10px;
+      font-size:13px;
+      color: var(--text);
+      text-align:center;
+    }
+    table.score th:first-child, table.score td:first-child{
+      text-align:left;
+      font-weight:900;
+      color: rgba(255,255,255,.85);
+      width:120px;
+    }
+    .scoreMuted{ color: rgba(255,255,255,.60); }
+    .scoreTotalRow td{
+      font-weight:1000;
+      background: rgba(255,255,255,.06);
+    }
+
+    /* Ranking final */
+    .results{
+      margin-top:16px;
+      padding:18px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background: rgba(255,255,255,.05);
+      display:none;
+    }
+    .results.show{ display:block; }
+    .results h2{
+      margin:0 0 10px 0;
+      font-size:26px;
+      font-weight:1100;
+      letter-spacing:.4px;
+    }
+    .winner{
+      font-size:34px;
+      font-weight:1100;
+      margin:8px 0;
+    }
+    .second{
+      font-size:24px;
+      font-weight:1000;
+      margin:6px 0;
+      color: rgba(255,255,255,.92);
+    }
+    .third{
+      font-size:20px;
+      font-weight:950;
+      margin:6px 0;
+      color: rgba(255,255,255,.86);
+    }
+    .rest{
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px solid var(--grid);
+      display:grid;
+      gap:6px;
+    }
+    .rowLine{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      font-weight:900;
+      color: rgba(255,255,255,.82);
+    }
+    .pill{
+      padding:2px 10px;
+      border:1px solid var(--grid);
+      border-radius:999px;
+      background: rgba(255,255,255,.04);
+      font-weight:1000;
+      color: rgba(255,255,255,.9);
+      white-space:nowrap;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="titleBar">
+    <div class="title">PODRIDA CALCULATOR</div>
+  </div>
+
+  <div class="toolbar">
+    <button id="addPlayerBtn" type="button">+ Jugador</button>
+    <button id="removePlayerBtn" type="button">− Jugador</button>
+    <button id="addRoundBtn" type="button">+ Ronda</button>
+    <button id="removeRoundBtn" type="button">− Ronda</button>
+    <span style="flex:1"></span>
+    <button id="saveBtn" type="button">Guardar</button>
+    <button id="clearBtn" type="button">Borrar todo</button>
+    <small>Auto-guardado.</small>
+  </div>
+
+  <div class="layout">
+    <div>
+      <table id="tabla" class="main">
+        <colgroup id="cols"></colgroup>
+        <thead id="thead"></thead>
+        <tbody id="tbody"></tbody>
+        <tfoot id="tfoot"></tfoot>
+      </table>
+
+      <div id="results" class="results">
+        <h2>RESULTADOS FINALES</h2>
+        <div id="winnerLine" class="winner"></div>
+        <div id="secondLine" class="second"></div>
+        <div id="thirdLine" class="third"></div>
+        <div id="restLines" class="rest"></div>
+      </div>
+    </div>
+
+    <aside class="scoreboard">
+      <div class="scoreboardHeader">Puntos por ronda</div>
+      <table id="scoreTable" class="score"></table>
+    </aside>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = "tabla_basa_v10";
+
+  function makeDefaultRounds(){
+    return ["2","4","6","8","8 sin","8 sin","8 sin","8 sin","8 sin","8 sin","7","5","3","1"];
+  }
+
+  function makeOptions0to8(selected="", forbidden=null){
+    const frag = document.createDocumentFragment();
+    const empty = document.createElement("option");
+    empty.value = "";
+    empty.textContent = "";
+    frag.appendChild(empty);
+
+    for(let i=0;i<=8;i++){
+      if(forbidden !== null && i === forbidden) continue;
+      const opt = document.createElement("option");
+      opt.value = String(i);
+      opt.textContent = String(i);
+      if(String(i) === String(selected)) opt.selected = true;
+      frag.appendChild(opt);
+    }
+    return frag;
+  }
+
+  function parseRoundCards(label){
+    const n = parseInt(String(label), 10);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function defaultState(){
+    const players = 6;
+    const rounds = makeDefaultRounds();
+    return {
+      playerCount: players,
+      names: Array(players).fill(""),
+      roundLabels: rounds.slice(),
+      rows: rounds.map(() => ({
+        players: Array(players).fill(0).map(() => ({ pidio:"", llevo:"" }))
+      }))
+    };
+  }
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return defaultState();
+      const parsed = JSON.parse(raw);
+
+      const st = defaultState();
+
+      const pc = Number(parsed.playerCount);
+      if(Number.isFinite(pc) && pc >= 2 && pc <= 12) st.playerCount = pc;
+
+      if(Array.isArray(parsed.names)) st.names = parsed.names.slice(0, st.playerCount);
+      while(st.names.length < st.playerCount) st.names.push("");
+
+      if(Array.isArray(parsed.roundLabels) && parsed.roundLabels.length >= 1){
+        st.roundLabels = parsed.roundLabels.map(x => String(x));
+      }
+
+      st.rows = st.roundLabels.map((_, r) => {
+        const row = { players: Array(st.playerCount).fill(0).map(() => ({ pidio:"", llevo:"" })) };
+        const srcRow = parsed.rows?.[r];
+        if(srcRow?.players && Array.isArray(srcRow.players)){
+          for(let p=0;p<Math.min(srcRow.players.length, st.playerCount);p++){
+            row.players[p].pidio = srcRow.players[p].pidio ?? "";
+            row.players[p].llevo = srcRow.players[p].llevo ?? "";
+          }
+        }
+        return row;
+      });
+
+      return st;
+    }catch{
+      return defaultState();
+    }
+  }
+
+  let state = loadState();
+
+  const colsEl  = document.getElementById("cols");
+  const theadEl = document.getElementById("thead");
+  const tbodyEl = document.getElementById("tbody");
+  const tfootEl = document.getElementById("tfoot");
+  const scoreTableEl = document.getElementById("scoreTable");
+
+  const resultsEl = document.getElementById("results");
+  const winnerLine = document.getElementById("winnerLine");
+  const secondLine = document.getElementById("secondLine");
+  const thirdLine  = document.getElementById("thirdLine");
+  const restLines  = document.getElementById("restLines");
+
+  function persist(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function displayName(i){
+    const n = (state.names[i] || "").trim();
+    return n !== "" ? n : `Jugador ${i+1}`;
+  }
+
+  // Puntaje:
+  // - Cumple: 10 + 3*llevo  (si pidio == llevo)
+  // - No cumple: -3 * |llevo - pidio|
+  function scoreFor(pidioStr, llevoStr){
+    if(pidioStr === "" || llevoStr === "") return null;
+    const pidio = Number(pidioStr);
+    const llevo = Number(llevoStr);
+    if(Number.isNaN(pidio) || Number.isNaN(llevo)) return null;
+
+    if(llevo === pidio){
+      return 10 + 3 * llevo;
+    }else{
+      return -3 * Math.abs(llevo - pidio);
+    }
+  }
+
+  function isRoundClosed(r){
+    return state.rows[r].players.every(pl => pl.llevo !== "");
+  }
+
+  function allRoundsClosed(){
+    return state.roundLabels.every((_, r) => isRoundClosed(r));
+  }
+
+  function lastClosedRoundIndex(){
+    let last = -1;
+    for(let r=0;r<state.roundLabels.length;r++){
+      if(isRoundClosed(r)) last = r;
+    }
+    return last;
+  }
+
+  // Rotación: quién arranca pidiendo por ronda (starter)
+  function starterIndexForRound(r){ return r % state.playerCount; }
+  function lastBidderIndexForRound(r){
+    return (starterIndexForRound(r) + state.playerCount - 1) % state.playerCount;
+  }
+  function bidOrderForRound(r){
+    const P = state.playerCount;
+    const start = starterIndexForRound(r);
+    const order = [];
+    for(let k=0;k<P;k++) order.push((start + k) % P);
+    return order;
+  }
+
+  // Regla del obligado
+  function enforceBidConstraint(r){
+    const cards = parseRoundCards(state.roundLabels[r]);
+    if(cards === null){
+      updatePidioSelectUI(r, lastBidderIndexForRound(r), null);
+      return;
+    }
+
+    const last = lastBidderIndexForRound(r);
+
+    let sumOthers = 0;
+    for(let p=0;p<state.playerCount;p++){
+      if(p === last) continue;
+      const v = state.rows[r].players[p].pidio;
+      if(v === ""){
+        updatePidioSelectUI(r, last, null);
+        return;
+      }
+      sumOthers += Number(v);
+    }
+
+    const forbidden = cards - sumOthers;
+
+    if(forbidden >= 0 && forbidden <= 8){
+      if(state.rows[r].players[last].pidio !== "" && Number(state.rows[r].players[last].pidio) === forbidden){
+        state.rows[r].players[last].pidio = "";
+        persist();
+      }
+      updatePidioSelectUI(r, last, forbidden);
+    }else{
+      updatePidioSelectUI(r, last, null);
+    }
+  }
+
+  function updatePidioSelectUI(r, p, forbidden){
+    const sel = tbodyEl.querySelector(`select[data-kind="pidio"][data-r="${r}"][data-p="${p}"]`);
+    if(!sel) return;
+
+    sel.classList.toggle("forcedHint", p === lastBidderIndexForRound(r));
+
+    const current = state.rows[r].players[p].pidio;
+    sel.innerHTML = "";
+    sel.appendChild(makeOptions0to8(current, forbidden));
+  }
+
+  function refreshAllConstraints(){
+    for(let r=0;r<state.roundLabels.length;r++){
+      enforceBidConstraint(r);
+      updatePidioSelectUI(r, lastBidderIndexForRound(r), null);
+    }
+  }
+
+  // ===== Turnos y Rondas (activa + próxima) =====
+  function getActiveRoundIndex(){
+    for(let r=0;r<state.roundLabels.length;r++){
+      if(!isRoundClosed(r)) return r;
+    }
+    return null;
+  }
+
+  function getNextRoundIndex(){
+    const r = getActiveRoundIndex();
+    if(r === null) return null;
+    return (r + 1 < state.roundLabels.length) ? (r + 1) : null;
+  }
+
+  function getNextBidderInRound(r){
+    const order = bidOrderForRound(r);
+    for(const p of order){
+      if(state.rows[r].players[p].pidio === "") return p;
+    }
+    return null;
+  }
+
+  function clearHighlights(){
+    tbodyEl.querySelectorAll("select.turnActive").forEach(el => el.classList.remove("turnActive"));
+    tbodyEl.querySelectorAll("td.roundActive").forEach(el => el.classList.remove("roundActive"));
+    tbodyEl.querySelectorAll("input.roundInput").forEach(el => {
+      el.classList.remove("roundActiveBig");
+      el.classList.remove("roundNextBig");
+    });
+    tbodyEl.querySelectorAll("td.pts.turnText").forEach(el => el.classList.remove("turnText"));
+    tbodyEl.querySelectorAll("td.pts.dealerText").forEach(el => el.classList.remove("dealerText"));
+  }
+
+  // ✅ REPARTE FIJO POR RONDA:
+  // dealer = jugador a la izquierda del STARTER
+  // aparece y se queda hasta que el STARTER carga su "pidio"
+  function updateHighlights(){
+    clearHighlights();
+
+    const r = getActiveRoundIndex();
+    const nextR = getNextRoundIndex();
+    if(r === null) return;
+
+    // tamaños de ronda (activa + próxima)
+    const roundCell = tbodyEl.querySelector(`td[data-kind="round"][data-r="${r}"]`);
+    if(roundCell) roundCell.classList.add("roundActive");
+
+    const roundInput = tbodyEl.querySelector(`td[data-kind="round"][data-r="${r}"] input.roundInput`);
+    if(roundInput) roundInput.classList.add("roundActiveBig");
+
+    if(nextR !== null){
+      const nextInput = tbodyEl.querySelector(`td[data-kind="round"][data-r="${nextR}"] input.roundInput`);
+      if(nextInput) nextInput.classList.add("roundNextBig");
+    }
+
+    // turno de pedir
+    const nextBidder = getNextBidderInRound(r);
+    if(nextBidder !== null){
+      const sel = tbodyEl.querySelector(`select[data-kind="pidio"][data-r="${r}"][data-p="${nextBidder}"]`);
+      if(sel) sel.classList.add("turnActive");
+
+      const ptsBidder = tbodyEl.querySelector(`td.pts[data-r="${r}"][data-p="${nextBidder}"]`);
+      if(ptsBidder){
+        ptsBidder.textContent = "TOCA PEDIR";
+        ptsBidder.classList.add("turnText");
+        ptsBidder.classList.remove("neg","pos");
+      }
+    }
+
+    // REPARTE fijo por ronda
+    const starter = starterIndexForRound(r);
+    const dealer = (starter - 1 + state.playerCount) % state.playerCount;
+
+    // aparece SOLO mientras el starter todavía no pidió
+    if(state.rows[r].players[starter].pidio === ""){
+      const ptsDealer = tbodyEl.querySelector(`td.pts[data-r="${r}"][data-p="${dealer}"]`);
+      if(ptsDealer){
+        ptsDealer.textContent = "REPARTE";
+        ptsDealer.classList.add("dealerText");
+        ptsDealer.classList.remove("neg","pos");
+      }
+    }
+  }
+
+  function buildTable(){
+    const P = state.playerCount;
+    const R = state.roundLabels.length;
+
+    colsEl.innerHTML = "";
+    const cCC = document.createElement("col");
+    cCC.className = "cc";
+    colsEl.appendChild(cCC);
+
+    for(let p=0;p<P;p++){
+      const cPi = document.createElement("col"); cPi.className = "pidio";
+      const cL  = document.createElement("col"); cL.className  = "llevo";
+      const cPts= document.createElement("col"); cPts.className= "puntos";
+      colsEl.appendChild(cPi);
+      colsEl.appendChild(cL);
+      colsEl.appendChild(cPts);
+    }
+
+    theadEl.innerHTML = "";
+
+    const trNames = document.createElement("tr");
+    const thEmpty = document.createElement("th");
+    thEmpty.textContent = "";
+    thEmpty.classList.add("topThick");
+    trNames.appendChild(thEmpty);
+
+    for(let p=0;p<P;p++){
+      const th = document.createElement("th");
+      th.colSpan = 3;
+      th.classList.add("topThick","sepL");
+      if(p === P-1) th.classList.add("sepR");
+
+      const input = document.createElement("input");
+      input.className = "nameInput";
+      input.placeholder = `Jugador ${p+1}`;
+      input.value = state.names[p] || "";
+      input.addEventListener("input", () => {
+        state.names[p] = input.value;
+        persist();
+        renderScoreboard();
+        updateFinalResults();
+      });
+
+      th.appendChild(input);
+      trNames.appendChild(th);
+    }
+    theadEl.appendChild(trNames);
+
+    const trHead = document.createElement("tr");
+    const thCC = document.createElement("th");
+    thCC.textContent = "cant cartas";
+    thCC.classList.add("bottomThick");
+    trHead.appendChild(thCC);
+
+    for(let p=0;p<P;p++){
+      const thPi = document.createElement("th");
+      thPi.textContent = "Pidió";
+      thPi.classList.add("sepL","bottomThick");
+
+      const thL = document.createElement("th");
+      thL.textContent = "Se llevó";
+      thL.classList.add("bottomThick");
+
+      const thPts = document.createElement("th");
+      thPts.textContent = "puntos";
+      thPts.classList.add("bottomThick");
+      if(p === P-1) thPts.classList.add("sepR");
+
+      trHead.appendChild(thPi);
+      trHead.appendChild(thL);
+      trHead.appendChild(thPts);
+    }
+    theadEl.appendChild(trHead);
+
+    tbodyEl.innerHTML = "";
+
+    for(let r=0;r<R;r++){
+      const tr = document.createElement("tr");
+
+      const tdCC = document.createElement("td");
+      tdCC.dataset.kind = "round";
+      tdCC.dataset.r = String(r);
+
+      const roundInput = document.createElement("input");
+      roundInput.className = "roundInput";
+      roundInput.value = state.roundLabels[r];
+      roundInput.addEventListener("input", () => {
+        state.roundLabels[r] = roundInput.value;
+        persist();
+        enforceBidConstraint(r);
+        recalcAndRender();
+        renderScoreboard();
+        updateHighlights();
+        updateFinalResults();
+      });
+
+      tdCC.appendChild(roundInput);
+      tr.appendChild(tdCC);
+
+      for(let p=0;p<P;p++){
+        const tdPi = document.createElement("td");
+        tdPi.classList.add("sepL");
+
+        const selPi = document.createElement("select");
+        selPi.classList.add("pidioSel");
+        selPi.dataset.kind = "pidio";
+        selPi.dataset.r = String(r);
+        selPi.dataset.p = String(p);
+        selPi.appendChild(makeOptions0to8(state.rows[r].players[p].pidio, null));
+        selPi.addEventListener("change", () => {
+          state.rows[r].players[p].pidio = selPi.value;
+          persist();
+          enforceBidConstraint(r);
+          recalcAndRender();
+          renderScoreboard();
+          updateHighlights();
+          updateFinalResults();
+        });
+        tdPi.appendChild(selPi);
+
+        const tdL = document.createElement("td");
+        const selL = document.createElement("select");
+        selL.classList.add("llevoSel");
+        selL.dataset.kind = "llevo";
+        selL.dataset.r = String(r);
+        selL.dataset.p = String(p);
+        selL.appendChild(makeOptions0to8(state.rows[r].players[p].llevo, null));
+        selL.addEventListener("change", () => {
+          state.rows[r].players[p].llevo = selL.value;
+          persist();
+          recalcAndRender();
+          renderScoreboard();
+          updateHighlights();
+          updateFinalResults();
+        });
+        tdL.appendChild(selL);
+
+        const tdPts = document.createElement("td");
+        tdPts.className = "pts";
+        tdPts.dataset.r = String(r);
+        tdPts.dataset.p = String(p);
+        if(p === P-1) tdPts.classList.add("sepR");
+
+        tr.appendChild(tdPi);
+        tr.appendChild(tdL);
+        tr.appendChild(tdPts);
+      }
+
+      tbodyEl.appendChild(tr);
+    }
+
+    tfootEl.innerHTML = "";
+    const trTotal = document.createElement("tr");
+    const tdTotalLabel = document.createElement("td");
+    tdTotalLabel.textContent = "TOTAL";
+    tdTotalLabel.className = "totalLabel";
+    trTotal.appendChild(tdTotalLabel);
+
+    for(let p=0;p<P;p++){
+      const td = document.createElement("td");
+      td.colSpan = 3;
+      td.classList.add("totalBox","sepL");
+      if(p === P-1) td.classList.add("sepR");
+      td.dataset.totalFor = String(p);
+      td.textContent = "0";
+      trTotal.appendChild(td);
+    }
+    tfootEl.appendChild(trTotal);
+
+    refreshAllConstraints();
+    recalcAndRender();
+    renderScoreboard();
+    updateHighlights();
+    updateFinalResults();
+  }
+
+  function recalcAndRender(){
+    const P = state.playerCount;
+    const R = state.roundLabels.length;
+    const lastClosed = lastClosedRoundIndex();
+
+    const activeR = getActiveRoundIndex();
+    const nextBidder = (activeR !== null) ? getNextBidderInRound(activeR) : null;
+
+    const starter = (activeR !== null) ? starterIndexForRound(activeR) : null;
+    const dealer = (activeR !== null) ? ((starter - 1 + P) % P) : null;
+
+    for(let r=0;r<R;r++){
+      for(let p=0;p<P;p++){
+        const cell = tbodyEl.querySelector(`td.pts[data-r="${r}"][data-p="${p}"]`);
+        if(!cell) continue;
+
+        const isTurnCell =
+          (activeR === r && nextBidder === p && state.rows[r].players[p].pidio === "");
+
+        const isDealerCell =
+          (activeR === r && dealer === p && starter !== null && state.rows[r].players[starter].pidio === "");
+
+        if(isTurnCell || isDealerCell){
+          // updateHighlights pone TOCA PEDIR / REPARTE
+          continue;
+        }
+
+        cell.classList.remove("turnText","dealerText");
+
+        if(r > lastClosed){
+          cell.textContent = "";
+          cell.classList.remove("neg","pos");
+          continue;
+        }
+
+        let acc = 0;
+        for(let rr=0; rr<=r; rr++){
+          if(!isRoundClosed(rr)) continue;
+          const pidio = state.rows[rr].players[p].pidio;
+          const llevo = state.rows[rr].players[p].llevo;
+          const s = scoreFor(pidio, llevo);
+          if(s !== null) acc += s;
+        }
+
+        cell.textContent = String(acc);
+        cell.classList.remove("neg","pos");
+        if(acc < 0) cell.classList.add("neg");
+        if(acc > 0) cell.classList.add("pos");
+      }
+    }
+
+    for(let p=0;p<P;p++){
+      let acc = 0;
+      for(let r=0;r<R;r++){
+        if(!isRoundClosed(r)) continue;
+        const pidio = state.rows[r].players[p].pidio;
+        const llevo = state.rows[r].players[p].llevo;
+        const s = scoreFor(pidio, llevo);
+        if(s !== null) acc += s;
+      }
+      const td = tfootEl.querySelector(`[data-total-for="${p}"]`);
+      if(td) td.textContent = String(acc);
+    }
+  }
+
+  function computeCumulativeMatrix(){
+    const P = state.playerCount;
+    const R = state.roundLabels.length;
+    const matrix = Array(R).fill(0).map(() => Array(P).fill(""));
+
+    for(let p=0;p<P;p++){
+      let acc = 0;
+      for(let r=0;r<R;r++){
+        if(isRoundClosed(r)){
+          const pidio = state.rows[r].players[p].pidio;
+          const llevo = state.rows[r].players[p].llevo;
+          const s = scoreFor(pidio, llevo);
+          if(s !== null) acc += s;
+          matrix[r][p] = String(acc);
+        }else{
+          matrix[r][p] = "";
+        }
+      }
+    }
+    return matrix;
+  }
+
+  function getTotals(){
+    const P = state.playerCount;
+    const R = state.roundLabels.length;
+    const totals = Array(P).fill(0);
+
+    for(let p=0;p<P;p++){
+      let acc = 0;
+      for(let r=0;r<R;r++){
+        if(!isRoundClosed(r)) continue;
+        const pidio = state.rows[r].players[p].pidio;
+        const llevo = state.rows[r].players[p].llevo;
+        const s = scoreFor(pidio, llevo);
+        if(s !== null) acc += s;
+      }
+      totals[p] = acc;
+    }
+    return totals;
+  }
+
+  function renderScoreboard(){
+    const P = state.playerCount;
+    const R = state.roundLabels.length;
+    const matrix = computeCumulativeMatrix();
+    const totals = getTotals();
+
+    scoreTableEl.innerHTML = "";
+
+    const trH = document.createElement("tr");
+    const th0 = document.createElement("th");
+    th0.textContent = "Ronda";
+    trH.appendChild(th0);
+
+    for(let p=0;p<P;p++){
+      const th = document.createElement("th");
+      th.textContent = displayName(p);
+      trH.appendChild(th);
+    }
+    scoreTableEl.appendChild(trH);
+
+    for(let r=0;r<R;r++){
+      const tr = document.createElement("tr");
+      const tdLabel = document.createElement("td");
+      tdLabel.textContent = state.roundLabels[r];
+      tdLabel.className = "scoreMuted";
+      tr.appendChild(tdLabel);
+
+      for(let p=0;p<P;p++){
+        const td = document.createElement("td");
+        td.textContent = matrix[r][p];
+        tr.appendChild(td);
+      }
+      scoreTableEl.appendChild(tr);
+    }
+
+    const trT = document.createElement("tr");
+    trT.className = "scoreTotalRow";
+    const tdT0 = document.createElement("td");
+    tdT0.textContent = "TOTAL";
+    trT.appendChild(tdT0);
+
+    for(let p=0;p<P;p++){
+      const td = document.createElement("td");
+      td.textContent = String(totals[p]);
+      trT.appendChild(td);
+    }
+    scoreTableEl.appendChild(trT);
+  }
+
+  function updateFinalResults(){
+    if(!allRoundsClosed()){
+      resultsEl.classList.remove("show");
+      return;
+    }
+
+    const totals = getTotals();
+    const list = totals.map((pts, i) => ({ i, pts, name: displayName(i) }))
+      .sort((a,b) => b.pts - a.pts);
+
+    resultsEl.classList.add("show");
+
+    winnerLine.textContent = list[0] ? `1º ${list[0].name} — ${list[0].pts} pts` : "";
+    secondLine.textContent = list[1] ? `2º ${list[1].name} — ${list[1].pts} pts` : "";
+    thirdLine.textContent  = list[2] ? `3º ${list[2].name} — ${list[2].pts} pts` : "";
+
+    restLines.innerHTML = "";
+    for(let k=3;k<list.length;k++){
+      const row = document.createElement("div");
+      row.className = "rowLine";
+      const left = document.createElement("div");
+      left.textContent = `${k+1}º ${list[k].name}`;
+      const right = document.createElement("div");
+      right.className = "pill";
+      right.textContent = `${list[k].pts} pts`;
+      row.appendChild(left);
+      row.appendChild(right);
+      restLines.appendChild(row);
+    }
+  }
+
+  // Botones estructura
+  function addPlayer(){
+    if(state.playerCount >= 12) return;
+    state.playerCount += 1;
+    state.names.push("");
+    for(let r=0;r<state.roundLabels.length;r++){
+      state.rows[r].players.push({ pidio:"", llevo:"" });
+    }
+    persist();
+    buildTable();
+  }
+  function removePlayer(){
+    if(state.playerCount <= 2) return;
+    state.playerCount -= 1;
+    state.names.pop();
+    for(let r=0;r<state.roundLabels.length;r++){
+      state.rows[r].players.pop();
+    }
+    persist();
+    buildTable();
+  }
+  function addRound(){
+    const P = state.playerCount;
+    state.roundLabels.push("Nueva");
+    state.rows.push({ players: Array(P).fill(0).map(() => ({ pidio:"", llevo:"" })) });
+    persist();
+    buildTable();
+  }
+  function removeRound(){
+    if(state.roundLabels.length <= 1) return;
+    state.roundLabels.pop();
+    state.rows.pop();
+    persist();
+    buildTable();
+  }
+
+  document.getElementById("addPlayerBtn").addEventListener("click", addPlayer);
+  document.getElementById("removePlayerBtn").addEventListener("click", removePlayer);
+  document.getElementById("addRoundBtn").addEventListener("click", addRound);
+  document.getElementById("removeRoundBtn").addEventListener("click", removeRound);
+
+  document.getElementById("saveBtn").addEventListener("click", () => {
+    persist();
+    alert("Guardado ✅");
+  });
+
+  document.getElementById("clearBtn").addEventListener("click", () => {
+    if(!confirm("¿Seguro que querés borrar todo?")) return;
+    localStorage.removeItem(STORAGE_KEY);
+    state = defaultState();
+    persist();
+    buildTable();
+  });
+
+  buildTable();
+  window.addEventListener("beforeunload", persist);
+</script>
+</body>
+</html>
