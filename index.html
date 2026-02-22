@@ -23,7 +23,7 @@
 
     body{
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-      margin:5;
+      margin: 5px;
       background: var(--bg);
       color: var(--text);
     }
@@ -46,13 +46,12 @@
       background: rgba(12, 55, 58, 0);
       border:0px solid var(--border);
     }
+
     .subtitle{
       width:100%;
       display:flex;
       justify-content:center;
       margin:14px 0 100px 0;
-    }
-     .subtitle{
       font-size: 50px;
       font-weight:100;
       letter-spacing:.8px;
@@ -62,13 +61,12 @@
       background: rgba(139, 42, 42, 0);
       border:0px solid var(--border);
     }
+
     .piepag{
       width:100%;
       display:flex;
       justify-content:left;
       margin:5px 0 5px 0;
-    }
-    .piepag{
       font-size:40px;
       font-weight:100;
       letter-spacing:.8px;
@@ -78,13 +76,12 @@
       background: rgba(12, 55, 58, 0);
       border:0px solid var(--border);
     }
+
     .instrucciones{
       width:100%;
       display:flex;
       justify-content:left;
       margin:5px 0 5px 0;
-    }
-    .instrucciones{
       font-size:35px;
       font-weight:100;
       letter-spacing:.8px;
@@ -99,8 +96,6 @@
       display:flex;
       justify-content:left;
       margin:5px 0 70px 0;
-    }
-    .instru2{
       font-size:35px;
       font-weight:100;
       letter-spacing:.8px;
@@ -111,9 +106,8 @@
       border:0px solid var(--border);
     }
 
-
     .toolbar{
-      display:flex; gap:5px; align-items:center; flex-wrap:wrap; margin-bottom:20px;
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:20px;
     }
     button{
       padding:9px 14px;
@@ -122,9 +116,39 @@
       background: rgba(255,255,255,.06);
       color: var(--text);
       cursor:pointer;
+      font-size:18px;
     }
     button:hover{ background: rgba(255, 255, 255, 0.1); }
     small{ color: var(--muted); }
+
+    /* Selector de jugadores */
+    .playersControl{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border:1px solid var(--border);
+      border-radius:30px;
+      background: rgba(255,255,255,.04);
+    }
+    .playersControl label{
+      font-size:18px;
+      font-weight:900;
+      color: rgba(255,255,255,.92);
+      white-space:nowrap;
+    }
+    .playersControl select{
+      height:40px;
+      min-width:110px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight:1000;
+      font-size:18px;
+      padding:0 12px;
+      outline:none;
+    }
 
     .layout{
       display:grid;
@@ -168,7 +192,6 @@
     .topThick{ border-top:2px solid var(--border) !important; }
     .bottomThick{ border-bottom:2px solid var(--border) !important; }
 
-    /* ✅ NOMBRES MÁS GRANDES (más que antes) */
     .nameInput{
       width:100%;
       box-sizing:border-box;
@@ -176,14 +199,13 @@
       border-radius:16px;
       padding:14px 10px;
       font-weight:1000;
-      font-size:50px;  /* <- MÁS GRANDE */
+      font-size:50px;
       background: rgba(255,255,255,.06);
       color: var(--text);
       text-align:center;
       outline:none;
     }
 
-    /* Ronda: chicas por defecto */
     .roundInput{
       width:100%;
       box-sizing:border-box;
@@ -198,14 +220,12 @@
       font-size:11px;
       opacity:.70;
     }
-    /* ✅ RONDA ACTIVA MUCHO MÁS GRANDE */
     .roundInput.roundActiveBig{
       font-size:40px;
       opacity:1;
       transform: scale(1.03);
-      background: rgb(225, 18, 18);
+      background: rgb(71, 221, 255);
     }
-    /* ✅ PRÓXIMA RONDA MUCHO MÁS GRANDE */
     .roundInput.roundNextBig{
       font-size:20px;
       opacity:.95;
@@ -246,7 +266,6 @@
     .pts.neg{ color:#ff0000; }
     .pts.pos{ color:#00ff04; }
 
-    /* TOCA PEDIR / REPARTE en columna puntos */
     .pts.turnText{
       color:#fff700;
       font-weight:1100;
@@ -276,46 +295,67 @@
       box-shadow: 0 0 0 2px rgba(255,255,255,.12) inset;
     }
 
-    /* Scoreboard */
+    /* Leaderboard (lista ordenada) */
     .scoreboard{
       border:10px solid var(--border);
       border-radius:14px;
       background: rgba(35, 75, 72, 0.493);
       overflow:hidden;
-      position:static;
+      position:sticky;
       top:10px;
     }
     .scoreboardHeader{
-      padding:12px 12px;
+      padding:16px 14px;
       background: rgba(255,255,255,.06);
       font-weight:1000;
       letter-spacing:.4px;
+      font-size:26px;
     }
-    table.score{
-      width:100%;
-      border-collapse:collapse;
-      table-layout:fixed;
+    .scoreList{
+      padding:14px;
+      display:grid;
+      gap:10px;
     }
-    table.score th, table.score td{
-      border-top:1px solid var(--grid);
-      padding:8px 10px;
-      font-size:13px;
-      color: var(--text);
-      text-align:center;
-    }
-    table.score th:first-child, table.score td:first-child{
-      text-align:left;
-      font-weight:900;
-      color: rgba(255,255,255,.85);
-      width:120px;
-    }
-    .scoreMuted{ color: rgba(255,255,255,.60); }
-    .scoreTotalRow td{
+    .scoreItem{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:14px 14px;
+      border:1px solid var(--grid);
+      border-radius:18px;
+      background: rgba(255,255,255,.05);
       font-weight:1000;
+      font-size:26px;
+    }
+    .scoreItem .left{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      min-width:0;
+    }
+    .rank{
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid var(--grid);
       background: rgba(255,255,255,.06);
+      font-weight:1100;
+      flex:0 0 auto;
+    }
+    .scoreItem .name{
+      color: rgba(255,255,255,.95);
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .scoreItem .ptsVal{
+      color: rgba(255,255,255,.98);
+      white-space:nowrap;
     }
 
-    /* Ranking final */
     .results{
       margin-top:16px;
       padding:18px;
@@ -348,18 +388,6 @@
       margin:6px 0;
       color: rgba(255,255,255,.86);
     }
-    .forth{
-      font-size:20px;
-      font-weight:950;
-      margin:6px 0;
-      color: rgba(255,255,255,.86);
-    }
-    .fifth{
-      font-size:20px;
-      font-weight:950;
-      margin:6px 0;
-      color: rgba(255,255,255,.86);
-    }
     .rowLine{
       display:flex;
       justify-content:space-between;
@@ -381,9 +409,11 @@
 <body>
 <div class="wrap">
   <div class="titleBar">
-    <div class="title">PODRIDA CALCULATOR</div> 
+    <div class="title">PODRIDA CALCULATOR</div>
   </div>
+
   <div class="subtitle">DUC</div>
+
   <div class="instrucciones">INSTRUCCIONES:</div>
   <div class="instrucciones">• Definí jugadores y rondas con + / −.</div>
   <div class="instrucciones">• La ronda grande es la que se está jugando.</div>
@@ -394,10 +424,14 @@
   <div class="instru2">• La siguiente ronda se activa sola.</div>
 
   <div class="toolbar">
-    <button id="addPlayerBtn" type="button">+ Jugador</button>
-    <button id="removePlayerBtn" type="button">− Jugador</button>
+    <div class="playersControl">
+      <label for="playersSelect">¿Cantidad de jugadores?</label>
+      <select id="playersSelect"></select>
+    </div>
+
     <button id="addRoundBtn" type="button">+ Ronda</button>
     <button id="removeRoundBtn" type="button">− Ronda</button>
+
     <span style="flex:1"></span>
     <button id="saveBtn" type="button">Guardar</button>
     <button id="clearBtn" type="button">Reiniciar</button>
@@ -421,28 +455,68 @@
         <div id="restLines" class="rest"></div>
       </div>
 
-        <div class="scoreboard">
-        <div class="scoreboardHeader">Puntos por ronda</div>
-        <table id="scoreTable" class="score"></table>
+      <div class="piepag">skkr</div>
+      <div class="piepag">Made by ***. Powerd by 777. GitHub: duc1709</div>
+    </div>
+
+    <aside class="scoreboard">
+      <div class="scoreboardHeader">Puntajes (en vivo)</div>
+      <div id="scoreList" class="scoreList"></div>
+    </aside>
   </div>
-        <div class="piepag">skkr</div>
-        <div class="piepag">Made by ***. Powerd by 777. GitHub: duc1709</div>
+</div>
 
 <script>
-  const STORAGE_KEY = "tabla_basa_v10";
+  const STORAGE_KEY = "tabla_basa_v12";
 
-  function makeDefaultRounds(){
-    return ["2","4","6","8","8 sin","8 sin","8 sin","8 sin","8 sin","8 sin","7","5","3","1"];
+  function normalizeRoundLabel(s){
+    return String(s || "")
+      .trim()
+      .replace(/\s+/g, "")
+      .replace(/siin+/gi, "sin");
   }
 
-  function makeOptions0to8(selected="", forbidden=null){
+  function defaultRoundsForPlayers(p){
+    const map = {
+      2: ["2","4","6","8","10","12","12sin","12sin","11","9","7","5","3","1"],
+      3: ["2","4","6","8","10","12","12sin","12sin","12sin","11","9","7","5","3","1"],
+      4: ["2","4","6","8","10","12","12sin","12sin","12sin","12sin","11","9","7","5","3","1"],
+      5: ["2","4","6","8","10","10sin","10sin","10sin","10sin","10sin","9","7","5","3","1"],
+      6: ["2","4","6","8","8sin","8sin","8sin","8sin","8sin","8sin","9","7","5","3","1"],
+      7: ["2","4","6","7","7sin","7sin","7sin","7sin","7sin","7sin","7sin","5","3","1"],
+      8: ["2","4","6","6sin","6sin","6sin","6sin","6sin","6sin","6sin","6sin","5","3","1"],
+      9: ["2","4","5","5sin","5sin","5sin","5sin","5sin","5sin","5sin","5sin","5sin","3","1"],
+      10:["2","4","5","5sin","5sin","5sin","5sin","5sin","5sin","5sin","5sin","5sin","5sin","3","1"],
+      11:["2","4","4sin","4sin","4sin","4sin","4sin","4sin","4sin","4sin","4sin","4sin","4sin","3","1"],
+      12:["2","4","4sin","4sin","4sin","4sin","4sin","4sin","4sin","4sin","4sin","4sin","4sin","4sin","3","1"],
+    };
+    const rounds = map[p] || map[6];
+    return rounds.map(normalizeRoundLabel);
+  }
+
+  function parseRoundCards(label){
+    const n = parseInt(String(label), 10);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  // ✅ max dinámico por ronda (3 -> 3, 10sin -> 10)
+  function maxForRound(r){
+    const cards = parseRoundCards(state.roundLabels[r]);
+    return (cards === null) ? 8 : cards;
+  }
+
+  // ✅ opciones 0..max
+  function makeOptions0toMax(selected = "", max = 8, forbidden = null){
     const frag = document.createDocumentFragment();
+
     const empty = document.createElement("option");
     empty.value = "";
     empty.textContent = "";
     frag.appendChild(empty);
 
-    for(let i=0;i<=10;i++){
+    const m = Math.max(0, Number(max) || 0);
+
+    for(let i = 0; i <= m; i++){
       if(forbidden !== null && i === forbidden) continue;
       const opt = document.createElement("option");
       opt.value = String(i);
@@ -453,20 +527,14 @@
     return frag;
   }
 
-  function parseRoundCards(label){
-    const n = parseInt(String(label), 10);
-    return Number.isFinite(n) ? n : null;
-  }
-
-  function defaultState(){
-    const players = 6;
-    const rounds = makeDefaultRounds();
+  function defaultState(playerCount = 6){
+    const rounds = defaultRoundsForPlayers(playerCount);
     return {
-      playerCount: players,
-      names: Array(players).fill(""),
+      playerCount,
+      names: Array(playerCount).fill(""),
       roundLabels: rounds.slice(),
       rows: rounds.map(() => ({
-        players: Array(players).fill(0).map(() => ({ pidio:"", llevo:"" }))
+        players: Array(playerCount).fill(0).map(() => ({ pidio:"", llevo:"" }))
       }))
     };
   }
@@ -474,26 +542,28 @@
   function loadState(){
     try{
       const raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) return defaultState();
+      if(!raw) return defaultState(6);
       const parsed = JSON.parse(raw);
 
-      const st = defaultState();
-
       const pc = Number(parsed.playerCount);
-      if(Number.isFinite(pc) && pc >= 2 && pc <= 12) st.playerCount = pc;
+      const playerCount = (Number.isFinite(pc) && pc >= 2 && pc <= 12) ? pc : 6;
 
-      if(Array.isArray(parsed.names)) st.names = parsed.names.slice(0, st.playerCount);
-      while(st.names.length < st.playerCount) st.names.push("");
+      const st = defaultState(playerCount);
+
+      if(Array.isArray(parsed.names)){
+        st.names = parsed.names.slice(0, playerCount);
+        while(st.names.length < playerCount) st.names.push("");
+      }
 
       if(Array.isArray(parsed.roundLabels) && parsed.roundLabels.length >= 1){
-        st.roundLabels = parsed.roundLabels.map(x => String(x));
+        st.roundLabels = parsed.roundLabels.map(normalizeRoundLabel);
       }
 
       st.rows = st.roundLabels.map((_, r) => {
-        const row = { players: Array(st.playerCount).fill(0).map(() => ({ pidio:"", llevo:"" })) };
+        const row = { players: Array(playerCount).fill(0).map(() => ({ pidio:"", llevo:"" })) };
         const srcRow = parsed.rows?.[r];
         if(srcRow?.players && Array.isArray(srcRow.players)){
-          for(let p=0;p<Math.min(srcRow.players.length, st.playerCount);p++){
+          for(let p=0;p<Math.min(srcRow.players.length, playerCount);p++){
             row.players[p].pidio = srcRow.players[p].pidio ?? "";
             row.players[p].llevo = srcRow.players[p].llevo ?? "";
           }
@@ -503,7 +573,7 @@
 
       return st;
     }catch{
-      return defaultState();
+      return defaultState(6);
     }
   }
 
@@ -513,15 +583,15 @@
   const theadEl = document.getElementById("thead");
   const tbodyEl = document.getElementById("tbody");
   const tfootEl = document.getElementById("tfoot");
-  const scoreTableEl = document.getElementById("scoreTable");
+  const scoreListEl = document.getElementById("scoreList");
 
   const resultsEl = document.getElementById("results");
   const winnerLine = document.getElementById("winnerLine");
   const secondLine = document.getElementById("secondLine");
   const thirdLine  = document.getElementById("thirdLine");
-  const forthLine  = document.getElementById("forthLine");
-  const fifthLine  = document.getElementById("fifthLine");
   const restLines  = document.getElementById("restLines");
+
+  const playersSelect = document.getElementById("playersSelect");
 
   function persist(){
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -532,9 +602,6 @@
     return n !== "" ? n : `Jugador ${i+1}`;
   }
 
-  // Puntaje:
-  // - Cumple: 10 + 3*llevo  (si pidio == llevo)
-  // - No cumple: -3 * |llevo - pidio|
   function scoreFor(pidioStr, llevoStr){
     if(pidioStr === "" || llevoStr === "") return null;
     const pidio = Number(pidioStr);
@@ -564,7 +631,6 @@
     return last;
   }
 
-  // Rotación: quién arranca pidiendo por ronda (starter)
   function starterIndexForRound(r){ return r % state.playerCount; }
   function lastBidderIndexForRound(r){
     return (starterIndexForRound(r) + state.playerCount - 1) % state.playerCount;
@@ -577,11 +643,51 @@
     return order;
   }
 
-  // Regla del obligado
+  // ✅ actualiza select de "Se llevó"
+  function updateLlevoSelectUI(r, p){
+    const sel = tbodyEl.querySelector(`select[data-kind="llevo"][data-r="${r}"][data-p="${p}"]`);
+    if(!sel) return;
+
+    const current = state.rows[r].players[p].llevo;
+    sel.innerHTML = "";
+    sel.appendChild(makeOptions0toMax(current, maxForRound(r), null));
+  }
+
+  // ✅ actualiza select de "Pidió" (incluye forbidden para obligado)
+  function updatePidioSelectUI(r, p, forbidden){
+    const sel = tbodyEl.querySelector(`select[data-kind="pidio"][data-r="${r}"][data-p="${p}"]`);
+    if(!sel) return;
+
+    sel.classList.toggle("forcedHint", p === lastBidderIndexForRound(r));
+
+    const current = state.rows[r].players[p].pidio;
+    sel.innerHTML = "";
+    sel.appendChild(makeOptions0toMax(current, maxForRound(r), forbidden));
+  }
+
+  // ✅ si cambia la etiqueta de la ronda, refresca rangos y limpia inválidos
+  function refreshRowSelectRanges(r){
+    const max = maxForRound(r);
+
+    for(let p = 0; p < state.playerCount; p++){
+      const pid = state.rows[r].players[p].pidio;
+      const llev = state.rows[r].players[p].llevo;
+
+      if(pid !== "" && Number(pid) > max) state.rows[r].players[p].pidio = "";
+      if(llev !== "" && Number(llev) > max) state.rows[r].players[p].llevo = "";
+
+      updatePidioSelectUI(r, p, null);
+      updateLlevoSelectUI(r, p);
+    }
+
+    persist();
+  }
+
+  // Regla del obligado (último en pedir no puede dejar suma == cartas)
   function enforceBidConstraint(r){
     const cards = parseRoundCards(state.roundLabels[r]);
     if(cards === null){
-      updatePidioSelectUI(r, lastBidderIndexForRound(r), null);
+      // si no hay número, no aplico obligado
       return;
     }
 
@@ -599,8 +705,9 @@
     }
 
     const forbidden = cards - sumOthers;
+    const max = maxForRound(r);
 
-    if(forbidden >= 0 && forbidden <= 8){
+    if(forbidden >= 0 && forbidden <= max){
       if(state.rows[r].players[last].pidio !== "" && Number(state.rows[r].players[last].pidio) === forbidden){
         state.rows[r].players[last].pidio = "";
         persist();
@@ -611,25 +718,16 @@
     }
   }
 
-  function updatePidioSelectUI(r, p, forbidden){
-    const sel = tbodyEl.querySelector(`select[data-kind="pidio"][data-r="${r}"][data-p="${p}"]`);
-    if(!sel) return;
-
-    sel.classList.toggle("forcedHint", p === lastBidderIndexForRound(r));
-
-    const current = state.rows[r].players[p].pidio;
-    sel.innerHTML = "";
-    sel.appendChild(makeOptions0to8(current, forbidden));
-  }
-
   function refreshAllConstraints(){
-    for(let r=0;r<state.roundLabels.length;r++){
+    for(let r=0; r<state.roundLabels.length; r++){
       enforceBidConstraint(r);
-      updatePidioSelectUI(r, lastBidderIndexForRound(r), null);
+      for(let p=0; p<state.playerCount; p++){
+        updatePidioSelectUI(r, p, null);
+        updateLlevoSelectUI(r, p);
+      }
     }
   }
 
-  // ===== Turnos y Rondas (activa + próxima) =====
   function getActiveRoundIndex(){
     for(let r=0;r<state.roundLabels.length;r++){
       if(!isRoundClosed(r)) return r;
@@ -662,9 +760,6 @@
     tbodyEl.querySelectorAll("td.pts.dealerText").forEach(el => el.classList.remove("dealerText"));
   }
 
-  // ✅ REPARTE FIJO POR RONDA:
-  // dealer = jugador a la izquierda del STARTER
-  // aparece y se queda hasta que el STARTER carga su "pidio"
   function updateHighlights(){
     clearHighlights();
 
@@ -672,7 +767,6 @@
     const nextR = getNextRoundIndex();
     if(r === null) return;
 
-    // tamaños de ronda (activa + próxima)
     const roundCell = tbodyEl.querySelector(`td[data-kind="round"][data-r="${r}"]`);
     if(roundCell) roundCell.classList.add("roundActive");
 
@@ -684,7 +778,6 @@
       if(nextInput) nextInput.classList.add("roundNextBig");
     }
 
-    // turno de pedir
     const nextBidder = getNextBidderInRound(r);
     if(nextBidder !== null){
       const sel = tbodyEl.querySelector(`select[data-kind="pidio"][data-r="${r}"][data-p="${nextBidder}"]`);
@@ -698,11 +791,9 @@
       }
     }
 
-    // REPARTE fijo por ronda
     const starter = starterIndexForRound(r);
     const dealer = (starter - 1 + state.playerCount) % state.playerCount;
 
-    // aparece SOLO mientras el starter todavía no pidió
     if(state.rows[r].players[starter].pidio === ""){
       const ptsDealer = tbodyEl.querySelector(`td.pts[data-r="${r}"][data-p="${dealer}"]`);
       if(ptsDealer){
@@ -711,6 +802,94 @@
         ptsDealer.classList.remove("neg","pos");
       }
     }
+  }
+
+  function getTotals(){
+    const P = state.playerCount;
+    const R = state.roundLabels.length;
+    const totals = Array(P).fill(0);
+
+    for(let p=0;p<P;p++){
+      let acc = 0;
+      for(let r=0;r<R;r++){
+        if(!isRoundClosed(r)) continue;
+        const pidio = state.rows[r].players[p].pidio;
+        const llevo = state.rows[r].players[p].llevo;
+        const s = scoreFor(pidio, llevo);
+        if(s !== null) acc += s;
+      }
+      totals[p] = acc;
+    }
+    return totals;
+  }
+
+  // Leaderboard en vivo (ordenado)
+  function renderScoreList(){
+    const totals = getTotals();
+
+    const list = totals.map((pts, i) => ({
+      i,
+      pts,
+      name: displayName(i),
+    })).sort((a,b) => b.pts - a.pts);
+
+    scoreListEl.innerHTML = "";
+
+    for(let rank=0; rank<list.length; rank++){
+      const row = list[rank];
+
+      const item = document.createElement("div");
+      item.className = "scoreItem";
+
+      const left = document.createElement("div");
+      left.className = "left";
+
+      const rnk = document.createElement("div");
+      rnk.className = "rank";
+      rnk.textContent = `${rank+1}`;
+
+      const name = document.createElement("div");
+      name.className = "name";
+      name.textContent = row.name;
+
+      left.appendChild(rnk);
+      left.appendChild(name);
+
+      const pts = document.createElement("div");
+      pts.className = "ptsVal";
+      pts.textContent = `${row.pts} pts`;
+
+      item.appendChild(left);
+      item.appendChild(pts);
+      scoreListEl.appendChild(item);
+    }
+  }
+
+  function buildPlayersSelect(){
+    playersSelect.innerHTML = "";
+    for(let i=2;i<=12;i++){
+      const opt = document.createElement("option");
+      opt.value = String(i);
+      opt.textContent = String(i);
+      if(i === state.playerCount) opt.selected = true;
+      playersSelect.appendChild(opt);
+    }
+  }
+
+  function setPlayerCount(newCount){
+    const n = Number(newCount);
+    if(!Number.isFinite(n) || n < 2 || n > 12) return;
+
+    const keepNames = state.names.slice(0, Math.min(state.playerCount, n));
+    while(keepNames.length < n) keepNames.push("");
+
+    const fresh = defaultState(n);
+    fresh.names = keepNames;
+
+    state = fresh;
+    persist();
+    buildPlayersSelect();
+    buildTable();
   }
 
   function buildTable(){
@@ -752,7 +931,7 @@
       input.addEventListener("input", () => {
         state.names[p] = input.value;
         persist();
-        renderScoreboard();
+        renderScoreList();
         updateFinalResults();
       });
 
@@ -800,11 +979,15 @@
       roundInput.className = "roundInput";
       roundInput.value = state.roundLabels[r];
       roundInput.addEventListener("input", () => {
-        state.roundLabels[r] = roundInput.value;
-        persist();
+        state.roundLabels[r] = normalizeRoundLabel(roundInput.value);
+        roundInput.value = state.roundLabels[r];
+
+        // ✅ refresca rangos 0..cartas en esa fila
+        refreshRowSelectRanges(r);
+
         enforceBidConstraint(r);
         recalcAndRender();
-        renderScoreboard();
+        renderScoreList();
         updateHighlights();
         updateFinalResults();
       });
@@ -821,13 +1004,13 @@
         selPi.dataset.kind = "pidio";
         selPi.dataset.r = String(r);
         selPi.dataset.p = String(p);
-        selPi.appendChild(makeOptions0to8(state.rows[r].players[p].pidio, null));
+        selPi.appendChild(makeOptions0toMax(state.rows[r].players[p].pidio, maxForRound(r), null));
         selPi.addEventListener("change", () => {
           state.rows[r].players[p].pidio = selPi.value;
           persist();
           enforceBidConstraint(r);
           recalcAndRender();
-          renderScoreboard();
+          renderScoreList();
           updateHighlights();
           updateFinalResults();
         });
@@ -839,12 +1022,12 @@
         selL.dataset.kind = "llevo";
         selL.dataset.r = String(r);
         selL.dataset.p = String(p);
-        selL.appendChild(makeOptions0to8(state.rows[r].players[p].llevo, null));
+        selL.appendChild(makeOptions0toMax(state.rows[r].players[p].llevo, maxForRound(r), null));
         selL.addEventListener("change", () => {
           state.rows[r].players[p].llevo = selL.value;
           persist();
           recalcAndRender();
-          renderScoreboard();
+          renderScoreList();
           updateHighlights();
           updateFinalResults();
         });
@@ -884,7 +1067,7 @@
 
     refreshAllConstraints();
     recalcAndRender();
-    renderScoreboard();
+    renderScoreList();
     updateHighlights();
     updateFinalResults();
   }
@@ -912,7 +1095,6 @@
           (activeR === r && dealer === p && starter !== null && state.rows[r].players[starter].pidio === "");
 
         if(isTurnCell || isDealerCell){
-          // updateHighlights pone TOCA PEDIR / REPARTE
           continue;
         }
 
@@ -954,96 +1136,6 @@
     }
   }
 
-  function computeCumulativeMatrix(){
-    const P = state.playerCount;
-    const R = state.roundLabels.length;
-    const matrix = Array(R).fill(0).map(() => Array(P).fill(""));
-
-    for(let p=0;p<P;p++){
-      let acc = 0;
-      for(let r=0;r<R;r++){
-        if(isRoundClosed(r)){
-          const pidio = state.rows[r].players[p].pidio;
-          const llevo = state.rows[r].players[p].llevo;
-          const s = scoreFor(pidio, llevo);
-          if(s !== null) acc += s;
-          matrix[r][p] = String(acc);
-        }else{
-          matrix[r][p] = "";
-        }
-      }
-    }
-    return matrix;
-  }
-
-  function getTotals(){
-    const P = state.playerCount;
-    const R = state.roundLabels.length;
-    const totals = Array(P).fill(0);
-
-    for(let p=0;p<P;p++){
-      let acc = 0;
-      for(let r=0;r<R;r++){
-        if(!isRoundClosed(r)) continue;
-        const pidio = state.rows[r].players[p].pidio;
-        const llevo = state.rows[r].players[p].llevo;
-        const s = scoreFor(pidio, llevo);
-        if(s !== null) acc += s;
-      }
-      totals[p] = acc;
-    }
-    return totals;
-  }
-
-  function renderScoreboard(){
-    const P = state.playerCount;
-    const R = state.roundLabels.length;
-    const matrix = computeCumulativeMatrix();
-    const totals = getTotals();
-
-    scoreTableEl.innerHTML = "";
-
-    const trH = document.createElement("tr");
-    const th0 = document.createElement("th");
-    th0.textContent = "Ronda";
-    trH.appendChild(th0);
-
-    for(let p=0;p<P;p++){
-      const th = document.createElement("th");
-      th.textContent = displayName(p);
-      trH.appendChild(th);
-    }
-    scoreTableEl.appendChild(trH);
-
-    for(let r=0;r<R;r++){
-      const tr = document.createElement("tr");
-      const tdLabel = document.createElement("td");
-      tdLabel.textContent = state.roundLabels[r];
-      tdLabel.className = "scoreMuted";
-      tr.appendChild(tdLabel);
-
-      for(let p=0;p<P;p++){
-        const td = document.createElement("td");
-        td.textContent = matrix[r][p];
-        tr.appendChild(td);
-      }
-      scoreTableEl.appendChild(tr);
-    }
-
-    const trT = document.createElement("tr");
-    trT.className = "scoreTotalRow";
-    const tdT0 = document.createElement("td");
-    tdT0.textContent = "TOTAL";
-    trT.appendChild(tdT0);
-
-    for(let p=0;p<P;p++){
-      const td = document.createElement("td");
-      td.textContent = String(totals[p]);
-      trT.appendChild(td);
-    }
-    scoreTableEl.appendChild(trT);
-  }
-
   function updateFinalResults(){
     if(!allRoundsClosed()){
       resultsEl.classList.remove("show");
@@ -1059,46 +1151,26 @@
     winnerLine.textContent = list[0] ? `1º ${list[0].name} — ${list[0].pts} pts` : "";
     secondLine.textContent = list[1] ? `2º ${list[1].name} — ${list[1].pts} pts` : "";
     thirdLine.textContent  = list[2] ? `3º ${list[2].name} — ${list[2].pts} pts` : "";
-    forthLine.textContent  = list[2] ? `4º ${list[2].name} — ${list[3].pts} pts` : "";
-    fifthLine.textContent  = list[2] ? `4º ${list[2].name} — ${list[4].pts} pts` : "";
-    forthLine.textContent  = list[3] ? `4º ${list[2].name} — ${list[3].pts} pts` : "";
 
     restLines.innerHTML = "";
     for(let k=3;k<list.length;k++){
       const row = document.createElement("div");
       row.className = "rowLine";
+
       const left = document.createElement("div");
       left.textContent = `${k+1}º ${list[k].name}`;
+
       const right = document.createElement("div");
       right.className = "pill";
       right.textContent = `${list[k].pts} pts`;
+
       row.appendChild(left);
       row.appendChild(right);
       restLines.appendChild(row);
     }
   }
 
-  // Botones estructura
-  function addPlayer(){
-    if(state.playerCount >= 12) return;
-    state.playerCount += 1;
-    state.names.push("");
-    for(let r=0;r<state.roundLabels.length;r++){
-      state.rows[r].players.push({ pidio:"", llevo:"" });
-    }
-    persist();
-    buildTable();
-  }
-  function removePlayer(){
-    if(state.playerCount <= 2) return;
-    state.playerCount -= 1;
-    state.names.pop();
-    for(let r=0;r<state.roundLabels.length;r++){
-      state.rows[r].players.pop();
-    }
-    persist();
-    buildTable();
-  }
+  // + Ronda / - Ronda se mantienen
   function addRound(){
     const P = state.playerCount;
     state.roundLabels.push("Nueva");
@@ -1114,8 +1186,6 @@
     buildTable();
   }
 
-  document.getElementById("addPlayerBtn").addEventListener("click", addPlayer);
-  document.getElementById("removePlayerBtn").addEventListener("click", removePlayer);
   document.getElementById("addRoundBtn").addEventListener("click", addRound);
   document.getElementById("removeRoundBtn").addEventListener("click", removeRound);
 
@@ -1127,14 +1197,18 @@
   document.getElementById("clearBtn").addEventListener("click", () => {
     if(!confirm("¿Seguro que querés reiniciar la partida?")) return;
     localStorage.removeItem(STORAGE_KEY);
-    state = defaultState();
+    state = defaultState(state.playerCount);
     persist();
+    buildPlayersSelect();
     buildTable();
   });
 
+  // init
+  buildPlayersSelect();
+  playersSelect.addEventListener("change", (e) => setPlayerCount(e.target.value));
+
   buildTable();
   window.addEventListener("beforeunload", persist);
-  
 </script>
 </body>
 </html>
