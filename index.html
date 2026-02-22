@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PODRIDA CALCULATOR</title>
   <style>
     :root{
@@ -404,153 +404,6 @@
       color: rgba(255,255,255,.9);
       white-space:nowrap;
     }
-    /* =========================
-   MOBILE OPTIMIZATION
-   Pegalo AL FINAL del <style>
-========================= */
-
-/* Evita zoom/scroll raro y mejora el tap */
-html, body{
-  width:100%;
-  overflow-x:hidden;
-  -webkit-text-size-adjust:100%;
-  touch-action: manipulation;
-}
-
-.wrap{
-  padding:16px;
-}
-
-/* Toolbar pegada arriba en mobile */
-.toolbar{
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(0,5,49,.92);
-  backdrop-filter: blur(8px);
-  padding: 10px 6px;
-  border-radius: 18px;
-}
-
-/* Layout a 1 columna en celular */
-@media (max-width: 900px){
-  .layout{
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Títulos más chicos */
-  .titleBar{ margin: 20px 0 6px 0; }
-  .title{ font-size: 42px; border-radius: 18px; padding: 10px 12px; }
-  .subtitle{ font-size: 22px; margin: 6px 0 14px 0; }
-
-  /* Instrucciones compactas */
-  .instrucciones{ font-size: 16px; }
-  .instru2{ font-size: 16px; margin-bottom: 20px; }
-
-  /* Footer más chico */
-  .piepag{ font-size: 14px; padding: 6px 8px; }
-
-  /* Controles apilados y grandes */
-  .toolbar{
-    gap: 8px;
-  }
-  button{
-    font-size: 16px;
-    padding: 12px 14px;
-    border-radius: 18px;
-  }
-  .playersControl{
-    width: 100%;
-    justify-content: space-between;
-    border-radius: 18px;
-  }
-  .playersControl label{
-    font-size: 16px;
-  }
-  .playersControl select{
-    font-size: 16px;   /* >=16 para evitar zoom iOS */
-    height: 44px;      /* target grande */
-    border-radius: 16px;
-  }
-
-  /* Tabla: meterla dentro de scroll horizontal */
-  #tabla{
-    display:block;             /* clave para overflow */
-    overflow-x:auto;
-    -webkit-overflow-scrolling: touch;
-    border-radius: 14px;
-  }
-
-  /* Mantener la tabla usable */
-  table.main{
-    min-width: 950px;  /* ajusta si querés, depende de cuántos jugadores */
-  }
-
-  table.main th, table.main td{
-    font-size: 16px;
-    padding: 8px 6px;
-  }
-
-  /* Inputs/selects grandes y sin zoom */
-  .nameInput{
-    font-size: 22px;
-    padding: 10px 8px;
-    border-radius: 14px;
-  }
-  .roundInput{
-    font-size: 14px;
-    padding: 10px 10px;
-    border-radius: 14px;
-  }
-  select{
-    height: 44px;
-    font-size: 16px;
-    border-radius: 14px;
-  }
-
-  /* Ronda activa / próxima: más legible pero sin explotar el layout */
-  .roundInput.roundActiveBig{
-    font-size: 28px;
-    transform: none;
-  }
-  .roundInput.roundNextBig{
-    font-size: 18px;
-  }
-
-  /* Scoreboard abajo y no sticky (en mobile molesta) */
-  .scoreboard{
-    position: static;
-    top:auto;
-    border-width: 4px;
-  }
-  .scoreboardHeader{
-    font-size: 20px;
-    padding: 12px;
-  }
-  .scoreItem{
-    font-size: 18px;
-    padding: 12px;
-  }
-  .rank{
-    width: 36px;
-    height: 36px;
-  }
-}
-
-/* ✅ Sticky first column (RONDAS) para mobile y desktop */
-table.main td:first-child,
-table.main th:first-child{
-  position: sticky;
-  left: 0;
-  z-index: 4;
-  background: rgba(0,5,49,.95);
-  backdrop-filter: blur(6px);
-}
-
-/* En el header, un poco más arriba */
-table.main thead th:first-child{
-  z-index: 6;
-}
   </style>
 </head>
 <body>
@@ -1359,4 +1212,3 @@ table.main thead th:first-child{
 </script>
 </body>
 </html>
-celular
