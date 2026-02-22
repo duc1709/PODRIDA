@@ -6,7 +6,7 @@
   <title>PODRIDA CALCULATOR</title>
   <style>
     :root{
-      --bg:#061a33;
+      --bg:#041325;
       --border: rgba(255,255,255,.18);
       --grid: rgba(255,255,255,.12);
       --text:#ffffff;
@@ -14,7 +14,7 @@
       --pidioBg: rgba(255,255,255,.10);
       --llevoBg: rgba(110,200,255,.18);
 
-      --turnBg: rgba(255, 204, 80, .90);
+      --turnBg: rgba(255, 183, 0, 0.9);
       --turnOutline: rgba(0,0,0,.25);
 
       --roundBg: rgba(255,255,255,.10);
@@ -23,12 +23,12 @@
 
     body{
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-      margin:0;
+      margin:5;
       background: var(--bg);
       color: var(--text);
     }
 
-    .wrap{ max-width:1750px; margin:0 auto; padding:18px; }
+    .wrap{ max-width:1750px; margin:0 auto; padding:50px; }
 
     .titleBar{
       width:100%;
@@ -37,33 +37,33 @@
       margin:8px 0 14px 0;
     }
     .title{
-      font-size:44px;
+      font-size:100px;
       font-weight:1000;
       letter-spacing:.8px;
       text-align:center;
       padding:8px 14px;
-      border-radius:14px;
-      background: rgba(255,255,255,.04);
-      border:1px solid var(--border);
+      border-radius:30px;
+      background: rgba(0, 0, 0, 0);
+      border:0px solid var(--border);
     }
 
     .toolbar{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:14px;
+      display:flex; gap:5px; align-items:center; flex-wrap:wrap; margin-bottom:20px;
     }
     button{
       padding:9px 14px;
       border:1px solid var(--border);
-      border-radius:12px;
+      border-radius:30px;
       background: rgba(255,255,255,.06);
       color: var(--text);
       cursor:pointer;
     }
-    button:hover{ background: rgba(255,255,255,.10); }
+    button:hover{ background: rgba(255, 255, 255, 0.1); }
     small{ color: var(--muted); }
 
     .layout{
       display:grid;
-      grid-template-columns: 1fr 420px;
+      grid-template-columns: 1fr 700px;
       gap:14px;
       align-items:start;
     }
@@ -85,7 +85,7 @@
       height:40px;
       padding:8px 8px;
       vertical-align:middle;
-      font-size:15px;
+      font-size:25px;
       color: var(--text);
     }
     table.main thead th{
@@ -93,9 +93,9 @@
       background: rgba(255,255,255,.06);
     }
 
-    col.cc { width: 195px; }
-    col.pidio { width: 110px; }
-    col.llevo { width: 100px; }
+    col.cc { width: 180px; }
+    col.pidio { width: 85px; }
+    col.llevo { width: 80px; }
     col.puntos { width: 140px; }
 
     .sepL{ border-left:2px solid var(--border) !important; }
@@ -111,7 +111,7 @@
       border-radius:16px;
       padding:14px 10px;
       font-weight:1000;
-      font-size:32px;  /* <- MÁS GRANDE */
+      font-size:50px;  /* <- MÁS GRANDE */
       background: rgba(255,255,255,.06);
       color: var(--text);
       text-align:center;
@@ -135,14 +135,14 @@
     }
     /* ✅ RONDA ACTIVA MUCHO MÁS GRANDE */
     .roundInput.roundActiveBig{
-      font-size:36px;
+      font-size:40px;
       opacity:1;
       transform: scale(1.03);
       background: rgba(255,255,255,.14);
     }
     /* ✅ PRÓXIMA RONDA MUCHO MÁS GRANDE */
     .roundInput.roundNextBig{
-      font-size:28px;
+      font-size:20px;
       opacity:.95;
       background: rgba(255,255,255,.10);
     }
@@ -158,7 +158,7 @@
       transition: background .15s ease, box-shadow .15s ease;
       outline:none;
     }
-    option{ color:#000; }
+    option{ color:#000000; }
 
     select.pidioSel{ background: var(--pidioBg); }
     select.llevoSel{ background: var(--llevoBg); }
@@ -178,19 +178,19 @@
       font-weight:1000;
       letter-spacing:.3px;
     }
-    .pts.neg{ color:#ff8a8a; }
-    .pts.pos{ color:#9cff9c; }
+    .pts.neg{ color:#ff0000; }
+    .pts.pos{ color:#00ff04; }
 
     /* TOCA PEDIR / REPARTE en columna puntos */
     .pts.turnText{
-      color:#ffd36e;
+      color:#fff700;
       font-weight:1100;
       text-transform:uppercase;
       font-size:12px;
       letter-spacing:.6px;
     }
     .pts.dealerText{
-      color:#8ad7ff;
+      color:#ff9557;
       font-weight:1100;
       text-transform:uppercase;
       font-size:12px;
@@ -218,7 +218,7 @@
       background: rgba(255,255,255,.04);
       overflow:hidden;
       position:sticky;
-      top:14px;
+      top:10px;
     }
     .scoreboardHeader{
       padding:12px 12px;
@@ -267,28 +267,33 @@
       letter-spacing:.4px;
     }
     .winner{
-      font-size:34px;
+      font-size:50px;
       font-weight:1100;
       margin:8px 0;
     }
     .second{
-      font-size:24px;
+      font-size:40px;
       font-weight:1000;
       margin:6px 0;
       color: rgba(255,255,255,.92);
     }
     .third{
+      font-size:30px;
+      font-weight:950;
+      margin:6px 0;
+      color: rgba(255,255,255,.86);
+    }
+    .forth{
       font-size:20px;
       font-weight:950;
       margin:6px 0;
       color: rgba(255,255,255,.86);
     }
-    .rest{
-      margin-top:10px;
-      padding-top:10px;
-      border-top:1px solid var(--grid);
-      display:grid;
-      gap:6px;
+    .fifth{
+      font-size:20px;
+      font-weight:950;
+      margin:6px 0;
+      color: rgba(255,255,255,.86);
     }
     .rowLine{
       display:flex;
@@ -321,8 +326,8 @@
     <button id="removeRoundBtn" type="button">− Ronda</button>
     <span style="flex:1"></span>
     <button id="saveBtn" type="button">Guardar</button>
-    <button id="clearBtn" type="button">Borrar todo</button>
-    <small>Auto-guardado.</small>
+    <button id="clearBtn" type="button">Reiniciar</button>
+    <small>Made by M$4.</small>
   </div>
 
   <div class="layout">
@@ -339,6 +344,8 @@
         <div id="winnerLine" class="winner"></div>
         <div id="secondLine" class="second"></div>
         <div id="thirdLine" class="third"></div>
+        <div id="fourthLine" class="fourth"></div>
+        <div id="fifthLine" class="fifth"></div>
         <div id="restLines" class="rest"></div>
       </div>
     </div>
@@ -364,7 +371,7 @@
     empty.textContent = "";
     frag.appendChild(empty);
 
-    for(let i=0;i<=8;i++){
+    for(let i=0;i<=10;i++){
       if(forbidden !== null && i === forbidden) continue;
       const opt = document.createElement("option");
       opt.value = String(i);
@@ -441,6 +448,8 @@
   const winnerLine = document.getElementById("winnerLine");
   const secondLine = document.getElementById("secondLine");
   const thirdLine  = document.getElementById("thirdLine");
+  const forthLine  = document.getElementById("forthLine");
+  const fifthLine  = document.getElementById("fifthLine");
   const restLines  = document.getElementById("restLines");
 
   function persist(){
@@ -683,7 +692,7 @@
 
     const trHead = document.createElement("tr");
     const thCC = document.createElement("th");
-    thCC.textContent = "cant cartas";
+    thCC.textContent = "RONDAS";
     thCC.classList.add("bottomThick");
     trHead.appendChild(thCC);
 
@@ -697,7 +706,7 @@
       thL.classList.add("bottomThick");
 
       const thPts = document.createElement("th");
-      thPts.textContent = "puntos";
+      thPts.textContent = "Puntos";
       thPts.classList.add("bottomThick");
       if(p === P-1) thPts.classList.add("sepR");
 
@@ -979,6 +988,9 @@
     winnerLine.textContent = list[0] ? `1º ${list[0].name} — ${list[0].pts} pts` : "";
     secondLine.textContent = list[1] ? `2º ${list[1].name} — ${list[1].pts} pts` : "";
     thirdLine.textContent  = list[2] ? `3º ${list[2].name} — ${list[2].pts} pts` : "";
+    forthLine.textContent  = list[2] ? `4º ${list[2].name} — ${list[3].pts} pts` : "";
+    fifthLine.textContent  = list[2] ? `4º ${list[2].name} — ${list[4].pts} pts` : "";
+    forthLine.textContent  = list[3] ? `4º ${list[2].name} — ${list[3].pts} pts` : "";
 
     restLines.innerHTML = "";
     for(let k=3;k<list.length;k++){
@@ -1042,7 +1054,7 @@
   });
 
   document.getElementById("clearBtn").addEventListener("click", () => {
-    if(!confirm("¿Seguro que querés borrar todo?")) return;
+    if(!confirm("¿Seguro que querés reiniciar la partida?")) return;
     localStorage.removeItem(STORAGE_KEY);
     state = defaultState();
     persist();
@@ -1054,3 +1066,6 @@
 </script>
 </body>
 </html>
+
+Anotador de los puntos de la podrida, cantidad de jugadores: 4 - 10
+Made by M$4. Powerd by DUC1709. GitHub: duc1709
