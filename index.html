@@ -85,7 +85,23 @@
       margin:5px 0 5px 0;
     }
     .instrucciones{
-      font-size:40px;
+      font-size:35px;
+      font-weight:100;
+      letter-spacing:.8px;
+      text-align:left;
+      padding:8px 14px;
+      border-radius:30px;
+      background: rgba(12, 55, 58, 0);
+      border:0px solid var(--border);
+    }
+    .instru2{
+      width:100%;
+      display:flex;
+      justify-content:left;
+      margin:5px 0 70px 0;
+    }
+    .instru2{
+      font-size:35px;
       font-weight:100;
       letter-spacing:.8px;
       text-align:left;
@@ -367,10 +383,15 @@
   <div class="titleBar">
     <div class="title">PODRIDA CALCULATOR</div> 
   </div>
-  <div class="subtitle">M$4</div>
+  <div class="subtitle">DUC</div>
   <div class="instrucciones">INSTRUCCIONES:</div>
-  <div class="instrucciones">* Definir cantidad de jugadores (+ jugadores / - jugadores)</div>
-  <div class="instrucciones">* Definir la cantidad de rondas</div>
+  <div class="instrucciones">• Definí jugadores y rondas con + / −.</div>
+  <div class="instrucciones">• La ronda grande es la que se está jugando.</div>
+  <div class="instrucciones">• El jugador con TOCA PEDIR elige su Pidió.</div>
+  <div class="instrucciones">• REPARTE indica quién reparte esa ronda.</div>
+  <div class="instrucciones">• Cuando termina la mano, completá Se llevó.</div>
+  <div class="instrucciones">• Los puntos se calculan automáticamente.</div>
+  <div class="instru2">• La siguiente ronda se activa sola.</div>
 
   <div class="toolbar">
     <button id="addPlayerBtn" type="button">+ Jugador</button>
@@ -404,8 +425,7 @@
         <div class="scoreboardHeader">Puntos por ronda</div>
         <table id="scoreTable" class="score"></table>
   </div>
-        <div class="piepag">Anotador de puntos de la Podrida.</div>
-        <div class="piepag">cantidad de jugadores: 4 - 10</div>
+        <div class="piepag">skkr</div>
         <div class="piepag">Made by M$4. Powerd by 777. GitHub: duc1709</div>
 
 <script>
