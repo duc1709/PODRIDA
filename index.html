@@ -4,21 +4,22 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PODRIDA CALCULATOR</title>
+
   <style>
     :root{
-      --bg:#6d018b;
-      --border: rgba(255,255,255,.18);
-      --grid: rgba(255,255,255,.12);
-      --text:#ffffff;
+      --bg:#ffffff;
+      --border: rgb(1, 1, 1);
+      --grid: rgb(0, 0, 0);
+      --text:#000000;
 
-      --pidioBg: rgba(255,255,255,.10);
-      --llevoBg: rgba(110,200,255,.18);
+      --pidioBg: rgba(225, 225, 0, 0.383);
+      --llevoBg: rgba(22, 163, 251, 0.321);
 
-      --turnBg: rgba(255, 183, 0, 0.9);
+      --turnBg: rgb(225, 255, 0);
       --turnOutline: rgba(0,0,0,.25);
 
-      --roundBg: rgba(255,255,255,.10);
-      --muted: rgba(255,255,255,.75);
+      --roundBg: rgb(255, 255, 255);
+      --muted: rgba(255, 0, 0, 0.75);
     }
 
     body{
@@ -51,7 +52,7 @@
       width:100%;
       display:flex;
       justify-content:center;
-      margin:14px 0 100px 0;
+      margin:14px 0 50px 0;
       font-size: 50px;
       font-weight:100;
       letter-spacing:.8px;
@@ -113,7 +114,7 @@
       padding:9px 14px;
       border:1px solid var(--border);
       border-radius:30px;
-      background: rgba(255,255,255,.06);
+      background: rgb(255, 20, 20, 0.18);
       color: var(--text);
       cursor:pointer;
       font-size:18px;
@@ -129,12 +130,12 @@
       padding:8px 12px;
       border:1px solid var(--border);
       border-radius:30px;
-      background: rgba(255,255,255,.04);
+      background: rgba(255, 20, 20, 0.18);
     }
     .playersControl label{
       font-size:18px;
       font-weight:900;
-      color: rgba(255,255,255,.92);
+      color: rgb(0, 0, 0);
       white-space:nowrap;
     }
     .playersControl select{
@@ -142,7 +143,7 @@
       min-width:110px;
       border-radius:18px;
       border:1px solid var(--border);
-      background: rgba(255,255,255,.06);
+      background: rgb(255, 255, 255);
       color: var(--text);
       font-weight:1000;
       font-size:18px;
@@ -165,7 +166,7 @@
       border-collapse:collapse;
       table-layout:fixed;
       border:2px solid var(--border);
-      background: rgba(255,255,255,.03);
+      background: rgb(255, 255, 255);
       border-radius: 14px;
       overflow:hidden;
     }
@@ -179,7 +180,7 @@
     }
     table.main thead th{
       font-weight:900;
-      background: rgba(255,255,255,.06);
+      background: rgba(0, 255, 13, 0.416);
     }
 
     col.cc { width: 180px; }
@@ -200,7 +201,7 @@
       padding:14px 10px;
       font-weight:1000;
       font-size:50px;
-      background: rgba(255,255,255,.06);
+      background: rgba(13, 255, 49, 0.51);
       color: var(--text);
       text-align:center;
       outline:none;
@@ -213,7 +214,7 @@
       border-radius:16px;
       padding:10px 10px;
       font-weight:1000;
-      background: rgba(255,255,255,.06);
+      background: rgb(255, 255, 255);
       color: var(--text);
       outline:none;
       transition: font-size .15s ease, transform .15s ease, opacity .15s ease, background .15s ease;
@@ -224,21 +225,21 @@
       font-size:40px;
       opacity:1;
       transform: scale(1.03);
-      background: rgb(71, 221, 255);
+      background: rgba(22, 255, 216, 0.464);
     }
     .roundInput.roundNextBig{
       font-size:20px;
       opacity:.95;
-      background: rgba(255,255,255,.10);
+      background: rgb(255, 255, 255);
     }
 
     select{
       width:100%;
-      height:34px;
+      height:45px;
       border-radius:12px;
       border:1px solid var(--border);
       padding:2px 10px;
-      background: rgba(255,255,255,.06);
+      background: rgb(0, 0, 0);
       color: var(--text);
       transition: background .15s ease, box-shadow .15s ease;
       outline:none;
@@ -250,7 +251,7 @@
 
     select.turnActive{
       background: var(--turnBg) !important;
-      color:#111;
+      color:#000000;
       box-shadow: 0 0 0 3px var(--turnOutline);
       border-color: rgba(0,0,0,.25);
       font-weight:1000;
@@ -263,21 +264,21 @@
       font-weight:1000;
       letter-spacing:.3px;
     }
-    .pts.neg{ color:#ff0000; }
-    .pts.pos{ color:#00ff04; }
+    .pts.neg{ color:#9b0000; }
+    .pts.pos{ color:#005401; }
 
     .pts.turnText{
-      color:#fff700;
+      color:#180078;
       font-weight:1100;
       text-transform:uppercase;
-      font-size:12px;
+      font-size:25px;
       letter-spacing:.6px;
     }
     .pts.dealerText{
-      color:#ff9557;
+      color:#ff5e00;
       font-weight:1100;
       text-transform:uppercase;
-      font-size:12px;
+      font-size:20px;
       letter-spacing:.6px;
     }
 
@@ -285,28 +286,28 @@
       height:64px;
       font-size:18px;
       font-weight:1100;
-      background: rgba(255,255,255,.06);
+      background: rgb(145, 145, 145);
       border-top:2px solid var(--border) !important;
     }
     .totalLabel{ text-align:left; padding-left:12px; }
     .totalBox{ text-align:center; }
 
     .forcedHint{
-      box-shadow: 0 0 0 2px rgba(255,255,255,.12) inset;
+      box-shadow: 0 0 0 2px rgb(255, 255, 255) inset;
     }
 
     /* Leaderboard (lista ordenada) */
     .scoreboard{
       border:10px solid var(--border);
       border-radius:14px;
-      background: rgba(35, 75, 72, 0.493);
+      background: rgb(0, 255, 238);
       overflow:hidden;
       position:sticky;
       top:10px;
     }
     .scoreboardHeader{
       padding:16px 14px;
-      background: rgba(255,255,255,.06);
+      background: rgb(0, 200, 255);
       font-weight:1000;
       letter-spacing:.4px;
       font-size:26px;
@@ -323,7 +324,7 @@
       padding:14px 14px;
       border:1px solid var(--grid);
       border-radius:18px;
-      background: rgba(255,255,255,.05);
+      background: rgba(0, 255, 26, 0.441);
       font-weight:1000;
       font-size:26px;
     }
@@ -341,18 +342,18 @@
       align-items:center;
       justify-content:center;
       border:1px solid var(--grid);
-      background: rgba(255,255,255,.06);
+      background: rgb(255, 255, 255);
       font-weight:1100;
       flex:0 0 auto;
     }
     .scoreItem .name{
-      color: rgba(255,255,255,.95);
+      color: rgb(0, 0, 0);
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
     }
     .scoreItem .ptsVal{
-      color: rgba(255,255,255,.98);
+      color: rgb(0, 0, 0);
       white-space:nowrap;
     }
 
@@ -361,7 +362,7 @@
       padding:18px;
       border:1px solid var(--border);
       border-radius:16px;
-      background: rgba(255,255,255,.05);
+      background: rgba(0, 0, 0, 0.822);
       display:none;
     }
     .results.show{ display:block; }
@@ -370,38 +371,40 @@
       font-size:26px;
       font-weight:1100;
       letter-spacing:.4px;
+      color: rgba(255, 255, 255, 0.92);
     }
     .winner{
       font-size:50px;
       font-weight:1100;
       margin:8px 0;
+      color: rgb(127, 255, 68);
     }
     .second{
       font-size:40px;
       font-weight:1000;
       margin:6px 0;
-      color: rgba(255,255,255,.92);
+      color: rgba(255, 255, 255, 0.92);
     }
     .third{
       font-size:30px;
       font-weight:950;
       margin:6px 0;
-      color: rgba(255,255,255,.86);
+      color: rgba(255, 255, 255, 0.92);
     }
     .rowLine{
       display:flex;
       justify-content:space-between;
       gap:14px;
       font-weight:900;
-      color: rgba(255,255,255,.82);
+      color: rgba(255, 255, 255, 0.82);
     }
     .pill{
       padding:2px 10px;
       border:1px solid var(--grid);
       border-radius:999px;
-      background: rgba(255,255,255,.04);
+      background: rgb(255, 255, 255);
       font-weight:1000;
-      color: rgba(255,255,255,.9);
+      color: rgba(0, 0, 0, 0.9);
       white-space:nowrap;
     }
   </style>
@@ -412,16 +415,18 @@
     <div class="title">PODRIDA CALCULATOR</div>
   </div>
 
-  <div class="subtitle">DUC</div>
+  <div class="subtitle"><strong>M$4</strong></div>
 
-  <div class="instrucciones">INSTRUCCIONES:</div>
-  <div class="instrucciones">• Definí jugadores y rondas con + / −.</div>
-  <div class="instrucciones">• La ronda grande es la que se está jugando.</div>
-  <div class="instrucciones">• El jugador con TOCA PEDIR elige su Pidió.</div>
-  <div class="instrucciones">• REPARTE indica quién reparte esa ronda.</div>
-  <div class="instrucciones">• Cuando termina la mano, completá Se llevó.</div>
-  <div class="instrucciones">• Los puntos se calculan automáticamente.</div>
-  <div class="instru2">• La siguiente ronda se activa sola.</div>
+  <h2><strong>INSTRUCCIONES:</strong></h2>
+  <ul>
+      <li><strong><h3>Definí jugadores 2 - 12 y anota los nombres en orden</h3></strong></li>
+      <li><h3>La ronda grande es la que se está jugando.</h3></li>
+      <li><h3>El jugador con TOCA PEDIR elige su Pidió primero y luego los siguientes.</h3></li>
+      <li><h3>REPARTE indica quién reparte esa ronda.</h3></li>
+      <li><h3>Cuando termina la mano, completá Se llevó de cada jugador.</h3></li>
+      <li><h3>Los puntos se calculan automáticamente.</h3></li>
+      <li><h3>La siguiente ronda se activa sola.</h3></li>
+  </ul>
 
   <div class="toolbar">
     <div class="playersControl">
@@ -455,9 +460,14 @@
         <div id="restLines" class="rest"></div>
       </div>
 
-      <div class="piepag">skkr</div>
-      <div class="piepag">Made by ***. Powerd by 777. GitHub: duc1709</div>
-    </div>
+      <br>
+      <div class="piepag"><strong>M$4</strong></div>
+          <p>
+            <a href="https://youtu.be/2A9qwIOVKoM?si=FBV9Uffo4R4IWncG" target="_blank" rel="noopener noreferrer">
+               <footer><strong><center>M$4</center></strong></footer>
+            </a>
+          </p>
+      </div>
 
     <aside class="scoreboard">
       <div class="scoreboardHeader">Puntajes (en vivo)</div>
