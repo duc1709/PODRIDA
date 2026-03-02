@@ -52,15 +52,19 @@
     button:hover{ background: rgba(255,255,255,.10); }
     small{ color: var(--muted); }
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-      table-layout:fixed;
-      border:2px solid var(--border);
-      background: rgba(255,255,255,.03);
-      border-radius: 14px;
-      overflow:hidden;
-    }
+    <div style="overflow-x:auto;">
+     <table>
+      table{
+        width:100%;
+        border-collapse:collapse;
+        table-layout:fixed;
+       border:2px solid var(--border);
+       background: rgba(255,255,255,.03);
+       border-radius: 14px;
+        overflow:hidden;
+       }
+     </table>
+    </div>
     th,td{
       border:1px solid var(--grid);
       height:36px;
